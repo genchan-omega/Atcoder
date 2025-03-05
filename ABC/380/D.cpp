@@ -42,24 +42,40 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
+int64 tree(int64 l, int64 r, int64 k){
+  int64 res=0;
+  while(l+1<r){
+    int64 c = (l+r)/2;
+    if(k<c)
+      r=c;
+    else
+      l=c, res++;
   }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+  return res;
+}
+
+char flip(char c){
+  if(islower(c))
+    return c-'a'+'A';
+  return c-'A'+'a';
 }
 
 int main(){
-  yes(solve());
+  string s;
+  int64 q, k, n, si, num;
+  cin >> s >> q;
+  n = s.size();
+  rep(qi, q){
+    cin >> k;
+    k--;
+    si = k%n;
+    k /= n;
+    num = tree(0, int64(1)<<60, k);
+    char ans = s[si];
+    if(num%2)
+      ans = flip(ans);
+    cout << ans << " ";
+  }
+  cout << endl;
   return 0;
 }

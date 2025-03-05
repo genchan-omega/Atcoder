@@ -1,21 +1,65 @@
+//      (((                  )))
+//    (((                      )))
+//   (((                        )))
+//  ((((                        ))))
+//  ((((          (())          ))))
+//   ((((      ((((  ))))      ))))
+//     ((((   ((((    ))))   ))))
+//        (((((          )))))
+
 #include <bits/stdc++.h>
-#define rep(i, s, n)    for (int i = (s); i < (int)n; i++)
-#define sort(vec) sort(vec.begin(), vec.end());
-#define reverse(vec) reverse(vec.begin(), vec.end());
+#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define sort(vec)          sort(vec.begin(), vec.end());
+#define reverse(vec)       reverse(vec.begin(), vec.end());
+#define make_v( vec, m)    vector<int64> vec(m);
+#define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
+#define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
+#define inf 1e9
+using int64 = int64_t;
 using namespace std;
 
-int main(){
-  string S;
-  int cnt=0;
-  cin >> S;
-  S.erase(0,1);
-  for(char c: S){
-    if(c == '-')
-      cnt++;
-    else{
-      cout << cnt << " ";
-      cnt = 0;
-    }
+template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
+template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
+
+// Debug
+void print_v(auto& vec){
+  cout << "[ ";
+  for(auto v:vec)
+    cout << v << " ";
+  cout << ']' << endl;
+  return;
+}
+
+void print_vv(auto& vec){
+  cout << "[ ";
+  for(auto v:vec){
+    for(auto k:v)
+      cout << k << " " << endl;
+    cout << endl;
   }
+  cout << ']' << endl;
+  return;
+}
+
+// Make Code
+int main(){
+  int64 cnt=0;
+  string s;
+  cin >> s;
+  queue<int64> que;
+  for(char& c:s){
+    if(c=='|'){
+      if(!que.empty()){
+        cout << que.front() << " ";
+        que.pop();
+      }
+      if(cnt!=0)
+        que.push(cnt);
+      cnt=0;
+    }
+    else
+      cnt++;
+  }
+  cout << que.front() << endl;
   return 0;
 }

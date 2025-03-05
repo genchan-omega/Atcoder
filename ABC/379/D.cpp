@@ -41,25 +41,39 @@ void print_vv(auto& vec){
   return;
 }
 
-// Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+void print_rle(auto& rle){
+  cout << "[character : length]" << endl;
+  for(auto [c, len]:rle)
+    cout << c << " : " << len << endl;;
+  return;
 }
 
+// Make Code
 int main(){
-  yes(solve());
+  int64 q, type, now=0;
+  cin >> q;
+  queue<int64> que;
+  rep(qi, q){
+    cin >> type;
+    switch(type){
+      case 1:
+        que.push(now);
+        break;
+      case 2:
+        int64 t;
+        cin >> t;
+        now += t;
+        break;
+      case 3:
+        int64 h, ans=0;
+        cin >> h;
+        while(que.size() and now-que.front()>=h){
+          que.pop();
+          ans++;
+        }
+        cout << ans << endl;
+        break;
+    }
+  }
   return 0;
 }

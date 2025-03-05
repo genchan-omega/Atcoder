@@ -41,25 +41,46 @@ void print_vv(auto& vec){
   return;
 }
 
+void print_rle(auto& rle){
+  cout << "[character : length]" << endl;
+  for(auto [c, len]:rle)
+    cout << c << " : " << len << endl;;
+  return;
+}
+
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
+const int si[] = {-1,  0, 1, 0};
+const int sj[] = { 0, -1, 0, 1};
+int64 h, w;
+
+// (現在の座標), 移動回数, maze
+int64 dfs(int64 ni, int64 nj, int64 k, vector<string> maze){
+  if(k==0)
+    return 1;
+  int64 num=0;
+  maze[ni][nj]='#';
+  rep(i, 4){
+    int64 nni = ni+si[i], nnj = nj + sj[i];
+    if(nni<0 or h<=nni or nnj<0 or w<=nnj)
+      continue;
+    if(maze[nni][nnj]=='#')
+      continue;
+    num += dfs(nni, nnj, k-1, maze);
   }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+  return num;
 }
 
 int main(){
-  yes(solve());
+  int64 k, ans=0;
+  cin >> h >> w >> k;
+  vector<string> maze(h);
+  rep(i, h)
+    cin >> maze[i];
+  rep(i, h)rep(j, w){
+    if(maze[i][j]=='#')
+      continue;
+    ans += dfs(i, j, k, maze);
+  }
+  cout << ans << endl;
   return 0;
 }

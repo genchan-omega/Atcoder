@@ -30,6 +30,7 @@ void print_v(auto& vec){
   return;
 }
 
+
 void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
@@ -42,24 +43,31 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+// nまでの素数を列挙
+vector<int64> Sieve_of_Eratosthenes(int64 n){
+  vector<int64> primes;
+  for(int64 i=2; i*i<n+1; ++i)
+    if(n%i==0)
+      primes.push_back(i);
+  return primes;
 }
 
 int main(){
-  yes(solve());
+  int64 n, ans=0;
+  cin >> n;
+  vector<int64> primes = Sieve_of_Eratosthenes(n);
+  print_v(primes);
+  for(int64 i=0; i<primes.size(); i++)
+    for(int64 j=i+1; j<primes.size(); j++)
+      if(primes[i]*primes[i]*primes[j]*primes[j] <= n)
+        ans++;
+  for(int64 i=0; i<primes.size(); i++){
+    int64 x=1;
+    rep(j, 8)
+      x*=primes[i];
+    if(x<=n)
+      ans++;
+  }
+  cout << ans << endl;
   return 0;
 }

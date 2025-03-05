@@ -8,18 +8,14 @@
 //        (((((          )))))
 
 #include <bits/stdc++.h>
-#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define rep(i, n)          for (int64 i = 0; i < (int64)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define inf 1e9
 using int64 = int64_t;
 using namespace std;
-
-template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
-template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
 
 // Debug
 void print_v(auto& vec){
@@ -34,7 +30,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " " << endl;
+      cout << k << " ";
     cout << endl;
   }
   cout << ']' << endl;
@@ -42,24 +38,25 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n;
+  cin >> n;
+  // vector<string> s(n);
+  vector<string> s(n, string(n, '#'));
+  for(int k=1; k < n/2+1; k+=2){
+    for(int i=k; i<n-k; i++){
+      for(int j=k; j<n-k; j++){
+        s[i][j]='.';
+      }
+    }
+    for(int i=k+1; i< n-k-1; i++){
+      for(int j=k+1; j<n-k-1; j++){
+        s[i][j]='#';
+      }
+    }
+  }
+
+  rep(i, n)
+    cout << s[i] << endl;
   return 0;
 }

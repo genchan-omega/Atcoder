@@ -42,24 +42,34 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
+vector<pair<char, int64>> rle(const string& str){
+  vector<pair<char, int64>> str_r;
+  int64 n = str.size();
+  for(int64 l=0; l<n; ){
+    char c = str[l];
+    int64 cnt = 0;
+    for(;l<n;cnt++, l++)
+      if(str[l]!=c)
+        break;
+    str_r.emplace_back(c, cnt);
   }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+  return str_r;
 }
 
 int main(){
-  yes(solve());
+  int64 n, now, ans = -inf;
+  string s;
+  vector<pair<char, int64>> s_rle;
+  cin >> n >> s;
+  s = '$' + s + '$';
+  n = s.size();
+  s_rle = rle(s);
+  rep(i, n-2){
+    if(s_rle[i].first=='1' and s_rle[i+1].first=='/' and s_rle[i+2].first=='2' and s_rle[i+1].second==1){
+      now = 2*min(s_rle[i].second, s_rle[i+2].second)+1;
+      chmax(ans, now);
+    }
+  }
+  cout << ans << endl;
   return 0;
 }

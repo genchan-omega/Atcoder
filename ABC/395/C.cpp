@@ -8,7 +8,7 @@
 //        (((((          )))))
 
 #include <bits/stdc++.h>
-#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define rep(i, n)          for (int64 i = 0; i < (int64)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<int64> vec(m);
@@ -17,9 +17,6 @@
 #define inf 1e9
 using int64 = int64_t;
 using namespace std;
-
-template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
-template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
 
 // Debug
 void print_v(auto& vec){
@@ -34,7 +31,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " " << endl;
+      cout << k << " ";
     cout << endl;
   }
   cout << ']' << endl;
@@ -42,24 +39,25 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n, ans, a;
+  cin >> n;
+  vector<int64> idx(1e6, -1);
+  vector<int64> dict(1e6, inf);
+  rep(i, n){
+    cin >> a;
+    if(idx[a-1]==-1)
+      idx[a-1] = i;
+    else{
+      dict[a-1] = min(dict[a-1], i-idx[a-1]+1);
+      idx[a-1] = i;
+    }
+  }
+
+  ans = *min_element(dict.begin(), dict.end());
+  if(ans == inf)
+    cout << -1 << endl;
+  else
+    cout << ans << endl;
   return 0;
 }

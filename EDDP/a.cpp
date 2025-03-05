@@ -21,45 +21,18 @@ using namespace std;
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
 template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
 
-// Debug
-void print_v(auto& vec){
-  cout << "[ ";
-  for(auto v:vec)
-    cout << v << " ";
-  cout << ']' << endl;
-  return;
-}
-
-void print_vv(auto& vec){
-  cout << "[ ";
-  for(auto v:vec){
-    for(auto k:v)
-      cout << k << " " << endl;
-    cout << endl;
+int main() {
+  int n;
+  cin >> n;
+  vector<int> h(n);
+  vector<int> dp(n, inf);
+  rep(i, n)
+    cin >> h[i];
+  dp[0] = 0;
+  for(int64 i=1; i<n; ++i) {
+    chmin(dp[i], dp[i-1] + abs(h[i]-h[i-1]));
+    if(i>1)
+      chmin(dp[i], dp[i-2] + abs(h[i] - h[i-2]));
   }
-  cout << ']' << endl;
-  return;
-}
-
-// Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
-int main(){
-  yes(solve());
-  return 0;
+  cout << dp[n-1] << endl;
 }

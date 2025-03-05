@@ -42,24 +42,40 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 h, w, d, ans=0;
+  cin >> h >> w >> d;
+  vector<string> s(h);
+  rep(i, h)
+    cin >> s[i];
+  int di[] = {-1, 0, 1, 0};
+  int dj[] = {0, -1, 0, 1};
+  // BFS
+  vector<vector<int>> dict(h, vector<int>(w, inf));
+  queue<pair<int, int>> que;
+  rep(i, h)rep(j, w)
+    if(s[i][j] == 'H'){
+      que.emplace(i, j);
+      dict[i][j]=0;
+    } 
+  while(!que.empty()){
+    auto [i, j] = que.front();
+    que.pop();
+    rep(k, 4){
+      int64 ni = i+di[k], nj = j+dj[k];
+      if(ni<0 or h<=ni or nj<0 or w<=nj)
+        continue;
+      if(s[ni][nj]=='#')
+        continue;
+      if(dict[ni][nj] != inf)
+        continue;
+      dict[ni][nj] = dict[i][j] + 1;
+      que.emplace(ni, nj);
+    }
+  }
+  rep(i, h)rep(j, w)
+    if(dict[i][j] <= d)
+      ans++;
+  cout << ans << endl;  
   return 0;
 }

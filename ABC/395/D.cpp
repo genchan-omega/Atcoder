@@ -8,7 +8,7 @@
 //        (((((          )))))
 
 #include <bits/stdc++.h>
-#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define rep(i, n)          for (int64 i = 0; i < (int64)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<int64> vec(m);
@@ -17,9 +17,6 @@
 #define inf 1e9
 using int64 = int64_t;
 using namespace std;
-
-template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
-template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
 
 // Debug
 void print_v(auto& vec){
@@ -34,7 +31,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " " << endl;
+      cout << k << " ";
     cout << endl;
   }
   cout << ']' << endl;
@@ -42,24 +39,40 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n, q, type, a, b;
+  cin >> n >> q;
+  vector<int64> pigeon(n);
+  vector<int64> place(n);
+  vector<int64> place_num(n);
+  vector<int64> ans;
+  rep(i, n){
+    pigeon[i] = i;
+    place[i] = i;
+    place_num[i] = i;
+  }
+  rep(i, q){
+    cin >> type;
+    switch (type){
+    case 1:
+      cin >> a >> b;
+      a--; b--;
+      pigeon[a] = place_num[b];
+      break;
+    case 2:
+      cin >> a >> b;
+      a--; b--;
+      swap(place[place_num[a]], place[place_num[b]]);
+      swap(place_num[a], place_num[b]);
+      break;
+    case 3:
+      cin >> a;
+      a--;
+      ans.push_back(place[pigeon[a]]+1);
+      break;
+    }
+  }
+  rep(i, ans.size())
+    cout << ans[i] << endl;
   return 0;
 }

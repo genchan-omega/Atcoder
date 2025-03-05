@@ -42,24 +42,15 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n, t1=0, t2=0, v, ans=0;
+  cin >> n;
+  rep(i, n){
+    cin >> t2 >> v;
+    ans = max(ans-(t2-t1), (int64)0);
+    ans += v;
+    t1 = t2;
+  }
+  cout << ans << endl;
   return 0;
 }

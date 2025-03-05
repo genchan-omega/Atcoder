@@ -41,20 +41,19 @@ void print_vv(auto& vec){
   return;
 }
 
+void print_rle(auto& rle){
+  cout << "[character : length]" << endl;
+  for(auto [c, len]:rle)
+    cout << c << " : " << len << endl;;
+  return;
+}
+
 // Make Code
 bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
   string s;
   cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
+  sort(s);
+  if(s=="ABC")
     return true;
   return false;
 }

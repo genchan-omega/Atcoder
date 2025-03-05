@@ -41,25 +41,42 @@ void print_vv(auto& vec){
   return;
 }
 
-// Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+void print_rle(auto& rle){
+  cout << "[character : length]" << endl;
+  for(auto [c, len]:rle)
+    cout << c << " : " << len << endl;;
+  return;
 }
 
+// Make Code
 int main(){
-  yes(solve());
+  int64 n, m, ans=0;
+  cin >> n >> m;
+  vector<pair<int64, int64>> stones(m+1);
+  rep(i, m){
+    cin >> stones[i].first;
+    stones[i].first--;
+  }
+  rep(i, m)
+    cin >> stones[i].second;
+  stones[m].first  = n;
+  stones[m].second = 1;
+  sort(stones);
+  int64 now=0;
+  rep(i, m){
+    int64 wid = stones[i+1].first - stones[i].first;
+    now += stones[i].second;
+    if(now<wid){
+      cout << -1 << endl;
+      return 0;
+    }
+    now -= wid;
+    ans += wid*(wid-1)/2;
+    ans += wid*now;
+  }
+  if(now!=0)
+    cout << -1 << endl;
+  else
+    cout << ans << endl;
   return 0;
 }

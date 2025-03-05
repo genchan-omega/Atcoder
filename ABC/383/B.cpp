@@ -42,24 +42,36 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 h, w, d, ans=-1e9;
+  cin >> h >> w >> d;
+  vector<string> s(h);
+  rep(i, h)
+    cin >> s[i];
+  rep(i1, h)rep(j1, w){
+    if(s[i1][j1]=='#')
+      continue;
+    rep(i2, h)rep(j2, w){
+      if(s[i2][j2]=='#')
+        continue;
+      if(i1==i2 and j1==j2)
+        continue;
+      // 確認するマス
+      int64 cnt=0;
+      rep(i3, h)rep(j3, w){
+        if(s[i3][j3]=='#')
+          continue;
+        bool flag=false;
+        if(abs(i3-i1)+abs(j3-j1) <= d)  
+          flag=true;
+        if(abs(i3-i2)+abs(j3-j2) <= d)
+          flag=true;
+        if(flag)
+          cnt++;
+      }
+      chmax(ans, cnt);
+    }
+  }
+  cout << ans << endl;  
   return 0;
 }

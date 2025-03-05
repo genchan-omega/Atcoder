@@ -16,29 +16,29 @@
 using int64 = int64_t;
 using namespace std;
 
-
 int main(){
-  int64 n;
-  double ans=-1e9;
-  cin >> n;
-  vector<vector<int>> a(n);
-  vector<int> k(n);
-  rep(i, n){
-    cin >> k[i];
-    a[i] = vector<int>(k[i]);
-    rep(j, k[i])
-      cin >> a[i][j];
+  int64 n, q, p, h, buf, ans=0;
+  cin >> n >> q;
+  vector<int> place(n);
+  vector<int> people(n, 1);
+  rep(i, n)
+    place[i] = i;
+  rep(i, q){
+    cin >> buf;
+    // cout << buf;
+    if(buf==1){
+      cin >> p >> h;
+      if(people[place[p-1]]==2)
+        ans--;
+      people[place[p-1]]--;
+      place[p-1] = h-1;
+      people[place[p-1]]++;
+      if(people[place[p-1]]==2)
+        ans++;
+    }
+    else{
+      cout << ans << endl;
+    }
   }
-  rep(i, n)rep(j, i){
-    map<int, int> cnt;
-    double now=0;
-    for(int na : a[j])
-      cnt[na]++;
-    for(int na : a[i])
-      now += cnt[na];
-    now /= (a[i].size() * a[j].size());
-    ans = max(ans, now);
-  }
-  printf("%.10f\n", ans);
   return 0;
 }

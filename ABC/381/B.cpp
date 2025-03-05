@@ -43,20 +43,19 @@ void print_vv(auto& vec){
 
 // Make Code
 bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
   string s;
+  map<char, int> dict;
   cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
+  if(s.size()%2)
+      return false;
+  for(int64 i=0; i<s.size(); i+=2){
+    if(s[i] != s[i+1])
+      return false;
+    if(dict[s[i]]>=1)
+      return false;
+    dict[s[i]]++;
   }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+  return true;
 }
 
 int main(){

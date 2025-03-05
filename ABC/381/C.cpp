@@ -42,24 +42,21 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n, ans=1;
+  string s;
+  cin >> n >> s;
+  s = '$' + s + '$';
+  n = s.size();
+  rep(i, n){
+    if(s[i]=='/'){
+      int64 x=1, now;
+      while(s[i-x]=='1' and s[i+x]=='2')
+        x++;
+      now = 2*x-1;
+      chmax(ans, now);
+    }
+  }
+  cout << ans << endl;
   return 0;
 }

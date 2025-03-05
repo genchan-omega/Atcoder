@@ -16,29 +16,29 @@
 using int64 = int64_t;
 using namespace std;
 
-
 int main(){
-  int64 n;
-  double ans=-1e9;
-  cin >> n;
-  vector<vector<int>> a(n);
-  vector<int> k(n);
-  rep(i, n){
-    cin >> k[i];
-    a[i] = vector<int>(k[i]);
-    rep(j, k[i])
-      cin >> a[i][j];
+  int64 n, m;
+  cin >> n >> m;
+  vector<vector<char>> s(n, vector<char>(n));
+  vector<vector<char>> t(n, vector<char>(n));
+  rep(i, n)rep(j, n)
+    cin >> s[i][j];
+  rep(i, m)rep(j, m)
+    cin >> t[i][j];
+  rep(i, n)rep(j, n){
+    bool flag=true;
+    if(s[i][j] == t[0][0]){
+      rep(k, m){
+        rep(l, m){
+        if(s[i+k][j+l]!=t[k][l])
+          flag = false;
+        }
+      }
+      if(flag){
+        cout << i+1 << ' ' << j+1 << endl;
+        return 0;
+      }
+    }
   }
-  rep(i, n)rep(j, i){
-    map<int, int> cnt;
-    double now=0;
-    for(int na : a[j])
-      cnt[na]++;
-    for(int na : a[i])
-      now += cnt[na];
-    now /= (a[i].size() * a[j].size());
-    ans = max(ans, now);
-  }
-  printf("%.10f\n", ans);
   return 0;
 }

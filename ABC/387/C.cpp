@@ -8,18 +8,13 @@
 //        (((((          )))))
 
 #include <bits/stdc++.h>
-#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define rep(i, n)          for (int64 i = 0; i < (int64)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
-#define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define inf 1e9
 using int64 = int64_t;
 using namespace std;
-
-template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
-template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
 
 // Debug
 void print_v(auto& vec){
@@ -42,24 +37,40 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+int64 myPow(int64 p, int64 q){
+  int64 num=1;
+  rep(i, q)
+    num *= p;
+  return num;
 }
 
+int64 f(int64 n){
+  string num;
+  int64 ans = 0;
+  for(char c:to_string(n))
+    num.push_back(c);
+  for(int i=1; i<num.size()-1; ++i) //桁数
+    for(int j=1; j<10; ++j)         //先頭の数
+      ans += myPow(j, i-1);
+  for(int64 i=1; i<num.size()-1; ++i){
+    if(num[i]>=num[0]){
+      ans += myPow(int(num[0]), num.size()-i);
+    }
+    for(int64 j=0; j<int(num[i])-1;++j){
+      ans += myPow();
+    }
+
+  }
+
+  return ans;
+}
+
+
+
 int main(){
-  yes(solve());
+  int64 l, r, ans = 0;
+  cin >> l >> r;
+    
+  cout << f(r) - f(l-1) << endl;
   return 0;
 }

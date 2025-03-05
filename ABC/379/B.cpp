@@ -41,25 +41,37 @@ void print_vv(auto& vec){
   return;
 }
 
+void print_rle(auto& rle){
+  cout << "[character : length]" << endl;
+  for(auto [c, len]:rle)
+    cout << c << " : " << len << endl;;
+  return;
+}
+
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
+vector<pair<char, int>> rle(string& str){
+	vector<pair<char, int>> str_r;
+  for(char& c:str){
+    if(str_r.size() and str_r.back().first == c)
+      str_r.back().second++;
+		else
+			str_r.emplace_back(c, 1);
   }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
+  return str_r;
 }
 
 int main(){
-  yes(solve());
+  int n, k, ans=0;
+  string s;
+  vector<pair<char, int>> t;
+  cin >> n >> k >> s;
+  t = rle(s);
+  rep(i, t.size()){
+    while (t[i].first=='O' and t[i].second>=k){
+      t[i].second-=k;
+      ans++;
+    }
+  }
+  cout << ans << endl;
   return 0;
 }

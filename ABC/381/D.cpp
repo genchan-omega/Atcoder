@@ -30,6 +30,7 @@ void print_v(auto& vec){
   return;
 }
 
+
 void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
@@ -42,24 +43,16 @@ void print_vv(auto& vec){
 }
 
 // Make Code
-bool solve(){
-  int64 cnt_1=0, cnt_2=0, cnt_3=0;
-  string s;
-  cin >> s;
-  for(char& c:s){
-    if(c=='1')
-      cnt_1++;
-    if(c=='2')
-      cnt_2++;
-    if(c=='3')
-      cnt_3++;
-  }
-  if(cnt_1==1 and cnt_2==2 and cnt_3==3)
-    return true;
-  return false;
-}
-
 int main(){
-  yes(solve());
+  int64 n, ans=0;
+  cin >> n;
+  vector<int64> a(n);
+  map<int64, int64> dict;
+  for(int64 i=0; i<n; i++){
+    if(a[i]!=a[i+1])
+      continue;
+    
+  }
+  cout << ans << endl;
   return 0;
 }
