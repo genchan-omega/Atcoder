@@ -50,21 +50,23 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n, qn;
-  cin >> n;
-  make_v(q, n);
-  make_v(r, n);
-  rep(i, n)
-    cin >> q[i] >> r[i];
-  cin >> qn;
-  rep(qi, qn){
-    int64 t, d, now;
-    cin >> t >> d;
-    t--;
-    now = r[t];
-    while(d > now)
-      now+=q[t];
-    cout << now << endl;
+  int64 ans=0;
+  vector<string> s(8);
+  set<int64> set_x;
+  set<int64> set_y;
+  rep(i, 8)
+    cin >> s[i];
+  rep(i, 8)rep(j, 8){
+    if(s[i][j]=='#'){
+      set_x.insert(i);
+      set_y.insert(j);
+    }
   }
+  rep(i, 8)rep(j, 8){
+    if(set_x.count(i) or set_y.count(j))
+      continue;
+    ans++;
+  }
+  cout << ans << endl;
   return 0;
 }

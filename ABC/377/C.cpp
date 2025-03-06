@@ -49,24 +49,25 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const int si[] = {2, 1, -1, -2, -2, -1,  1,  2};
+const int sj[] = {1, 2,  2,  1, -1, -2, -2, -1};
+
 int main(){
-  int64 n, qn;
-  cin >> n;
-  make_v(a, n);
-  map<int64, int64> map;
-  rep(i, n){
-    cin >> a[i];
-  }
-  rep(i, n){
-    if(map[a[i]]==0){
-      cout << -1 << " ";
-      map[a[i]] = i+1;
-    }
-    else{
-      cout << map[a[i]] << " ";
-      map[a[i]] = i+1;
+  int64 n, m, a, b, ans;
+  cin >> n >> m;
+  set<pair<int64, int64>> spaces;
+  rep(i, m){
+    cin >> a >> b;
+    a--, b--;
+    spaces.emplace(a, b);
+    rep(j, 8){
+      int64 ni = a+si[j], nj = b+sj[j];
+      if(ni<0 or n<=ni or nj<0 or n<=nj)
+        continue;
+      spaces.emplace(ni, nj);
     }
   }
-  cout << endl;
+  ans = n*n - spaces.size();
+  cout << ans << endl;
   return 0;
 }

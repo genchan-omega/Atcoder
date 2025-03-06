@@ -49,37 +49,21 @@ void print_rle(auto& rle){
 }
 
 // Make Code
-const int si[] = {-1,  0, 1, 0};
-const int sj[] = { 0, -1, 0, 1};
-int64 h, w;
-
-// (現在の座標), 移動回数, maze
-int64 dfs(int64 ni, int64 nj, int64 k, vector<string> maze){
-  if(k==0)
-    return 1;
-  int64 num=0;
-  maze[ni][nj]='#';
-  rep(i, 4){
-    int64 nni = ni+si[i], nnj = nj + sj[i];
-    if(nni<0 or h<=nni or nnj<0 or w<=nnj)
-      continue;
-    if(maze[nni][nnj]=='#')
-      continue;
-    num += dfs(nni, nnj, k-1, maze);
-  }
-  return num;
-}
-
 int main(){
-  int64 k, ans=0;
-  cin >> h >> w >> k;
-  vector<string> maze(h);
-  rep(i, h)
-    cin >> maze[i];
-  rep(i, h)rep(j, w){
-    if(maze[i][j]=='#')
-      continue;
-    ans += dfs(i, j, k, maze);
+  int64 n, m, l, r, ans=0;
+  cin >> n >> m;
+  vector<int64> max_l(m+1, -inf);
+  rep(i, n){
+    cin >> l >> r;
+    l--, r--;
+    max_l[r] = max(l, max_l[r]);
+  }
+  l=0;
+  for(r=l; r<m; r++){
+    while(l<=max_l[r])
+      l++;
+    // [l, r]区間内の全パターンを網羅
+    ans += r-l+1;
   }
   cout << ans << endl;
   return 0;
