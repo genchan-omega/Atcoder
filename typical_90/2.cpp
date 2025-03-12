@@ -14,13 +14,12 @@
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
 #define inf 1e9
 
-using namespace std;
 using int64 = int64_t;
 using G = vector<vector<int64>>;
 using P = pair<int64,int64>;
+using namespace std;
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
 template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
@@ -38,7 +37,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " ";
+      cout << k << " " << endl;
     cout << endl;
   }
   cout << ']' << endl;
@@ -54,21 +53,14 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
-    }
+  int64 n, m, a, b;
+  cin >> n >> m;
+  G graph(m);
+  rep(i, m){
+    cin >> a >> b;
+    a--, b--;
+    graph[a].push_back(b);
   }
-  rep(i, n)
-    cout << a[i] << endl;
+
   return 0;
 }

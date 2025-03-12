@@ -54,21 +54,19 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
-    }
+  int64 ans=0;
+  string s;
+  cin >> s;
+  map<char, int64> l;
+  map<char, int64> r;
+  rep(i, s.size())
+    r[s[i]]++;
+  rep(i, s.size()){
+    r[s[i]]--;
+    rep(j, 26)
+      ans+=l['A'+j]*r['A'+j];
+    l[s[i]]++;
   }
-  rep(i, n)
-    cout << a[i] << endl;
+  cout << ans << endl;
   return 0;
 }

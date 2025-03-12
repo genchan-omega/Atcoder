@@ -14,7 +14,6 @@
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
 #define inf 1e9
 
 using namespace std;
@@ -38,7 +37,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " ";
+      cout << k << " " << endl;
     cout << endl;
   }
   cout << ']' << endl;
@@ -53,22 +52,41 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+int64 length(int64 x1, int64 y1, int64 x2, int64 y2){
+  return abs(x1-x2)*abs(x1-x2) + abs(y1-y2)*abs(y1-y2);
+}
+
+bool solve(int64 x1, int64 y1, int64 x2, int64 y2, int64 x3, int64 y3){
+  int64 a = length(x1, y1, x2, y2),
+        b = length(x2, y2, x3, y3),
+        c = length(x3, y3, x1, y1);
+  if(a+b==c)
+    return true;
+  return false;
+}
+
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
+  int64 q;
+  cin >> q;
+  stack<int64> stk;
+  rep(i, 100)
+    stk.push(0);
+  rep(qi, q){
+    int64 type;
+    cin >> type;
+    switch (type){
+    case 1:
+      int64 x;
+      cin >> x;
+      stk.push(x);
+      break;
+    case 2:
+      int64 y;
+      y =  stk.top();
+      cout << y << endl;
+      stk.pop();
+      break;
     }
   }
-  rep(i, n)
-    cout << a[i] << endl;
   return 0;
 }

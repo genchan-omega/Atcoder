@@ -8,19 +8,26 @@
 //        (((((          )))))
 
 #include <bits/stdc++.h>
-#define rep(i, n)          for(int64 i = 0; i < (int64)n; ++i)
+#define rep(i, n)          for(ll i = 0; i < (ll)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
-#define make_v( vec, m)    vector<int64> vec(m);
-#define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
+#define make_v( vec, m)    vector<ll> vec(m);
+#define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf 1e9
+#define inf LLONG_MAX
+#define minf LLONG_MIN
 
 using namespace std;
-using int64 = int64_t;
-using G = vector<vector<int64>>;
-using P = pair<int64,int64>;
+using ll = int64_t;
+using G = vector<vector<edge>>;
+using P = pair<ll, ll>;
+
+struct edge{
+  ll to;
+  ll cost;
+  edge(ll to, ll cost) : to(to), cost(cost) {}
+};
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
 template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
@@ -53,22 +60,41 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+struct line{
+  ;
+};
+
+double dist(line pos1, line pos2){
+  ll dx = pos1.ls.first - pos2.ls.first;
+  ll dy = pos1.lt.first - pos2.ls.first;
+}
+
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
-    }
+  ll n, s, t;
+  cin >> n >> s >> t;
+  vector<line> lines(n);
+  rep(i, n){
+    ll a, b, c, d;
+    cin >> a >> b >> c >> d;
+    lines[i].ls = {a, b};
+    lines[i].lt = {c, d};
   }
+  vector<ll> p(n);
+  ll ans=inf;
   rep(i, n)
-    cout << a[i] << endl;
+    p[i] = i;
+  do
+  {
+    rep(bit, 1<<n){
+      ll now;
+      rep(i, n){
+
+      }
+      chmin(ans, now);
+    }
+  }while (next_permutation(p.begin(), p.end()));
+  
+  
+
   return 0;
 }

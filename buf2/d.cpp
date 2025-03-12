@@ -17,9 +17,14 @@
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
 #define inf 1e9
 
+struct edge{
+	int to;
+	int cost;
+};
+
 using namespace std;
 using int64 = int64_t;
-using G = vector<vector<int64>>;
+using G = vector<vector<edge>>;
 using P = pair<int64,int64>;
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
@@ -54,21 +59,19 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
-    }
+  int64 n ,l;
+  cin >> n >> l;
+  G graph[n];
+  rep(i, ){
+    
+    graph[i]
   }
-  rep(i, n)
-    cout << a[i] << endl;
+
+
+
+
+
+
+
   return 0;
 }

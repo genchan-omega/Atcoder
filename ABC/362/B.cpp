@@ -14,7 +14,6 @@
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
 #define inf 1e9
 
 using namespace std;
@@ -38,7 +37,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " ";
+      cout << k << " " << endl;
     cout << endl;
   }
   cout << ']' << endl;
@@ -53,22 +52,30 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+int64 length(int64 x1, int64 y1, int64 x2, int64 y2){
+  return abs(x1-x2)*abs(x1-x2) + abs(y1-y2)*abs(y1-y2);
+}
+
+bool solve(int64 x1, int64 y1, int64 x2, int64 y2, int64 x3, int64 y3){
+  int64 a = length(x1, y1, x2, y2),
+        b = length(x2, y2, x3, y3),
+        c = length(x3, y3, x1, y1);
+  if(a+b==c)
+    return true;
+  return false;
+}
+
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
+  vector<int64> x(3);
+  vector<int64> y(3);
+  rep(i, 3)
+    cin >> x[i] >> y[i];
+  rep(i, 3){
+    if(solve(x[i%3], y[i%3], x[(i+1)%3], y[(i+1)%3], x[(i+2)%3], y[(i+2)%3])){
+      cout << "Yes" << endl;
+      return 0;
     }
   }
-  rep(i, n)
-    cout << a[i] << endl;
+  cout << "No" << endl;
   return 0;
 }

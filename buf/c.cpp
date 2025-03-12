@@ -14,8 +14,7 @@
 #define make_v( vec, m)    vector<int64> vec(m);
 #define make_vv(vec, m, n) vector<vector<int64>> vec(m, vector<int64>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf 1e9
+#define inf 1e11
 
 using namespace std;
 using int64 = int64_t;
@@ -38,7 +37,7 @@ void print_vv(auto& vec){
   cout << "[ ";
   for(auto v:vec){
     for(auto k:v)
-      cout << k << " ";
+      cout << k << " " << endl;
     cout << endl;
   }
   cout << ']' << endl;
@@ -54,21 +53,34 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
+  int64 n, m, q, type, x, y, s;
+  cin >> n >> m >> q;
+  set<P> lines;
+  rep(qi, q){
+    cin >> type;
+    switch(type){
+      case 1:
+        cin >> x >> y;
+        x--,  y--;
+        lines.emplace(y, x);
+      break;
+      case 2:
+        cin >> x >> y;
+        x--, y--;
+        lines.erase({y, x});
+      break;
+      case 3:
+        cin >> s;
+        s--;
+        for(auto [h, w]: lines){
+          if(w==s)
+            s++;
+          else if(w+1==s)
+            s--;
+        }
+        cout << s+1 << endl;
+      break;
     }
   }
-  rep(i, n)
-    cout << a[i] << endl;
   return 0;
 }

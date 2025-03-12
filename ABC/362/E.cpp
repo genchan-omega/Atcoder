@@ -17,9 +17,14 @@
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
 #define inf 1e9
 
+struct edge{
+  int64 to;
+  int64 cost;
+};
+
 using namespace std;
 using int64 = int64_t;
-using G = vector<vector<int64>>;
+using G = vector<vector<edge>>;
 using P = pair<int64,int64>;
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
@@ -54,21 +59,26 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  int64 n;
-  cin >> n;
-  vector<string> a(n);
-  rep(i, n)
-    cin >> a[i];
-  rep(i, n/2){
-    rep(k, (i+1)%4){
-      for(int64 j=i; j<n-1-i; j++){
-        swap(a[i][j], a[j][n-1-i]);
-        swap(a[i][j], a[n-1-i][n-1-j]);
-        swap(a[i][j], a[n-1-j][i]);
-      }
-    }
+  int64 n, m, x, u, v;
+  cin >> n >> m >> x;
+
+  G graph(n); //nは頂点の個数
+  vector<int> dist(n, inf); // nは頂点の個数
+  priority_queue<P, vector<P>, greater<P>> pq; // (距離，コスト)
+
+  //初期条件
+  dist[0] = 0; //初期地点までのコストは0
+  pq.emplace(0, 0);
+
+  rep(i, m){
+    cin >> u >> v;
+    graph[i].emplace_back(u, v); // uからvへの辺を張る
   }
-  rep(i, n)
-    cout << a[i] << endl;
+  
+
+
+
+
+
   return 0;
 }
