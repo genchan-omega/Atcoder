@@ -58,27 +58,24 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+bool solve(){
+  ll n, k;
+  cin >> n >> k;
+  vector<ll> a(n), b(n);
+  rep(i, n)
+    cin >> a[i];
+  rep(i, n)
+    cin >> b[i];
+  ll sum = 0;
+  rep(i, n){
+    sum += abs(a[i]-b[i]);
+  }
+  if((sum-k)%2 or sum > k)
+    return false;
+  return true;
+}
+
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
-    }
-  }
-
-
-
-
-
-  cout << -1 << endl;
+  yes(solve());
   return 0;
 }

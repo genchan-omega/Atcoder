@@ -59,26 +59,26 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  ll h, w;
+  cin >> h >> w;
+  vector<vector<ll>> a(h, vector<ll>(w));
+  rep(i, h)rep(j, w)
+    cin >> a[i][j];
+  vector<ll> row_sum(h);
+  vector<ll> col_sum(w);
+  rep(i, h)rep(j,w)
+    row_sum[i] += a[i][j];
+  rep(i, w)rep(j,h)
+    col_sum[i] += a[j][i];
+
+  vector<vector<ll>> ans(h, vector<ll>(w));
+  rep(i, h)rep(j, w)
+    ans[i][j] = row_sum[i] + col_sum[j] - a[i][j];
+  rep(i, h){
+    rep(j, w){
+      cout << ans[i][j] << " ";
     }
+    cout << endl;
   }
-
-
-
-
-
-  cout << -1 << endl;
   return 0;
 }

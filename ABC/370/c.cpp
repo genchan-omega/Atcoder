@@ -59,26 +59,25 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
-    }
+  string s, t;
+  cin >> s >> t;
+  deque<ll> dq;
+  for(ll i=s.size()-1; i>=0; i--){
+    if(s[i]<t[i])
+      dq.push_back(i);
+    if(s[i]>t[i])
+      dq.push_front(i);
   }
 
-
-
-
-
-  cout << -1 << endl;
+  vector<string> ans;
+  while(dq.size()){
+    ll now = dq.front();
+    dq.pop_front();
+    s[now] = t[now];
+    ans.push_back(s);
+  }
+  cout << ans.size() << endl;
+  rep(i, ans.size())
+    cout << ans[i] << endl;
   return 0;
 }

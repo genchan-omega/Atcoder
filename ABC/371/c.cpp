@@ -15,7 +15,8 @@
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf 1e18
+#define inf LLONG_MAX
+#define minf LLONG_MIN
 
 using namespace std;
 using ll = int64_t;
@@ -59,26 +60,45 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
+  ll n, mg, mh;
+  set<P> g;
+  set<P> h;
+  map<P, ll> weight;
+  cin >> n >> mg;
+  rep(i, mg){
+    ll a, b;
+    cin >> a >> b;
+    a--, b--;
+    g.emplace(a, b);
   }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  cin >> mh;
+  rep(i, mh){
+    ll a, b;
+    cin >> a >> b;
+    a--, b--;
+    h.emplace(a, b);
+  }
+  // aの入力
+  rep(i, n-1){
+    for(int j=i+1; j<n; j++){
+      ll w;
+      cin >> w;
+      weight[{i, j}] = w;
     }
   }
 
-
-
-
-
-  cout << -1 << endl;
+  ll ans=0;
+  for(auto p:g){
+    if(h.count(p))
+      continue;
+    ans += weight[p];
+    cout << "add:" << p.first << ", " << p.second << endl;
+  }
+  for(auto p:h){
+    if(g.count(p))
+      continue;
+    ans += weight[p];
+  }
+  cout << ans << endl;
   return 0;
 }

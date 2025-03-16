@@ -59,26 +59,14 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
+  ll h, w;
+  cin >> h >> w;
+  if(h==1 or w==1)
+    cout << h*w << endl;
+  else{
+    h = (h+1)/2;
+    w = (w+1)/2;
+    cout << h*w << endl;
   }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
-    }
-  }
-
-
-
-
-
-  cout << -1 << endl;
   return 0;
 }

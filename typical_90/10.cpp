@@ -61,24 +61,27 @@ void print_rle(auto& rle){
 int main(){
   ll n;
   cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  vector<ll> suma(n+1), sumb(n+1);
+  suma[0] = sumb[0] = 0;
+  rep(i, n){
+    ll c, p;
+    cin >> c >> p;
+    if(c==1){
+      suma[i+1]=suma[i]+p;
+      sumb[i+1]=sumb[i];
+    }
+    else{
+      suma[i+1]=suma[i];
+      sumb[i+1]=sumb[i]+p;
     }
   }
-
-
-
-
-
-  cout << -1 << endl;
+  ll q;
+  cin >> q;
+  rep(qi, q){
+    ll l, r;
+    cin >> l >> r;
+    l--, r--;
+    cout << suma[r+1]-suma[l] << " " << sumb[r+1]-sumb[l] << endl;
+  }
   return 0;
 }

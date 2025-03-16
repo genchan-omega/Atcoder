@@ -59,26 +59,18 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  ll a, b, c;
+  cin >> a >> b >> c;
+  
+  auto gcd = [](ll a, ll b){
+    while(b){
+      a %= b;
+      swap(a, b);
     }
-  }
-
-
-
-
-
-  cout << -1 << endl;
+    return a;
+  };
+  ll r = gcd(a, gcd(b, c));
+  ll ans = a/r-1 + b/r-1 + c/r-1;
+  cout << ans << endl;
   return 0;
 }

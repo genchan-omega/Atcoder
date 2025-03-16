@@ -15,8 +15,7 @@
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf LLONG_MAX
-#define minf LLONG_MIN
+#define inf 1e18
 
 using namespace std;
 using ll = int64_t;
@@ -62,13 +61,25 @@ void print_rle(auto& rle){
 int main(){
   ll n;
   cin >> n;
-  vector<ll> a(n), b(n);
-  rep(i,n)
+  vector<ll> a(1<<20);
+  map<ll, ll> lcnt, rcnt;
+  rep(i, n){
     cin >> a[i];
-  rep(i,n)
-    cin >> b[i];
-  ll maxa = *max_element(a.begin(), a.end());
-  ll maxb = *max_element(b.begin(), b.end());
-  cout << maxa+maxb << endl;
+    a[i]--;
+  }
+  rep(i, n)
+    rcnt[a[i]]++;
+
+  ll ans=0;
+  rep(i, n-1){
+    ll now;
+    now = rcnt.size() + lcnt.size();
+    chmax(ans, now);
+    lcnt[a[i]]++;
+    rcnt[a[i]]--;
+    if(rcnt[a[i]]==0)
+      rcnt.erase(a[i]);
+  }
+  cout << ans << endl;
   return 0;
 }

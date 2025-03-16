@@ -15,7 +15,8 @@
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf 1e18
+#define inf LLONG_MAX
+#define minf LLONG_MIN
 
 using namespace std;
 using ll = int64_t;
@@ -59,26 +60,26 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
+  ll p;
+  cin >> p;
+
+  vector<ll> coin;
+  ll now=1;
+  for(ll i=1; i<11; i++){
+    now*=i;
+    coin.emplace_back(now);
   }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  reverse(coin);
+  
+  ll ans=0;
+  rep(i, 10){
+    while(1){
+      if(p<coin[i])
+        break;
+      p-=coin[i];
+      ans++;
     }
   }
-
-
-
-
-
-  cout << -1 << endl;
+  cout << ans << endl;
   return 0;
 }

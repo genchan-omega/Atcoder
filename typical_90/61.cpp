@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
+#define pd(ans) printf("%.8f\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -59,26 +59,24 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  ll q;
+  cin >> q;
+  deque<ll> dq;
+  rep(qi, q){
+    ll type, x;
+    cin >> type >> x;
+    switch(type){
+    case 1:
+      dq.push_front(x);
+      break;
+    case 2:
+      dq.push_back(x);
+      break;
+    case 3:
+      x--;
+      cout << dq[x] << endl;
+      break;
     }
   }
-
-
-
-
-
-  cout << -1 << endl;
   return 0;
 }

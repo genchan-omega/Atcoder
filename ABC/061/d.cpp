@@ -15,7 +15,8 @@
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
 #define pd(ans) cout << fixed << setprecision(8) << ans << endl;
-#define inf 1e18
+#define inf LLONG_MAX
+#define minf LLONG_MIN
 
 using namespace std;
 using ll = int64_t;
@@ -59,26 +60,40 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
+  ll n, m;
+  cin >> n >> m;
+  G graph(n);
+  rep(i, m){
+    ll u, v, w;
+    cin >> u >> v >> w;
+    u--, v--;
+    graph[u].emplace_back(v, w);
   }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
-    }
-  }
-
-
-
-
-
-  cout << -1 << endl;
+  vector<ll> dist(n, -1e18);
+  dist[0] = 0; 
+  // n回繰り返す
+  rep(i, n)
+    // 着目する頂点を決定する
+    rep(pos, n)
+      // その頂点からいける全ての頂点までの距離を更新
+      for(auto [next_v, w]:graph[pos])
+        dist[next_v] = max(dist[next_v], dist[pos]+w);
+  // 正閉路の存在
+  vector<bool> circuit(n);
+  // n回繰り返してもまだ大きくできるなら
+  rep(pos, n)
+    for(auto [next_v, w]:graph[pos])
+      if(dist[next_v]<dist[pos]+w)
+        circuit[next_v]=true;
+  rep(i, n)
+    rep(pos, n)
+      // 閉路に接続した部分について
+      if(circuit[pos])
+        for(auto [next_v, w]:graph[pos])
+          circuit[next_v] = true;
+  if(circuit[n-1])
+    cout << "inf" << endl;
+  else
+    cout << dist[n-1] << endl;
   return 0;
 }

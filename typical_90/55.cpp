@@ -9,6 +9,7 @@
 
 #include <bits/stdc++.h>
 #define rep(i, n)          for(ll i = 0; i < (ll)n; ++i)
+#define trep(i, s, n)      for(ll i = s; i < (ll)n; ++i)
 #define sort(vec)          sort(vec.begin(), vec.end());
 #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<ll> vec(m);
@@ -59,26 +60,16 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
-    }
-  }
+  ll n, p, q;
+  cin >> n >> p >> q;
+  vector<ll> a(n);
+  rep(i, n)
+    cin >> a[i];
 
-
-
-
-
-  cout << -1 << endl;
+  ll ans=0;
+  trep(i, 0, n)trep(j, i+1, n)trep(k, j+1, n)trep(l, k+1, n)trep(m, l+1, n)
+    if((((((a[i]%p)*a[j]%p)*a[k]%p)*a[l]%p)*a[m]%p)%p==q)
+      ans++;
+  cout << ans << endl;
   return 0;
 }

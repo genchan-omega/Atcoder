@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) cout << fixed << setprecision(8) << ans << endl;
+#define pd(ans) printf("%.8f\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -59,26 +59,35 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  set<P> div;
-  ll x=1, y;
-  for(ll i=0; i*i<=n; i++){
-    if(n%i==0)
-    div.emplace(i, n%i);
-  }
-  for(auto [left ,right]:div){
-    for(ll x=1, left*left+3*x*x-3*x*left<=right; x++){
-      if(left*left+3*x*x-3*x*left==right){
-        cot << 
-      }
+  string s;
+  ll k;
+  cin >> s >> k;
+  ll num=0;
+  ll n=s.size();
+
+  auto sys_eight2ll = [&](){
+    rep(i, n){
+      num += (s[i]-'0')*pow(8, n-i-1);
     }
+    return 
+  };
+  auto sys_ll2nine = [&](string s){
+    string buf;
+    rep(i, n){
+      char c = (num%9)+'0';
+      buf = c + buf;
+      num/=9;
+    }
+  };
+
+  rep(i, k){
+    sys_eight2ll(s);
+    sys_ll2nine();
+    // 処理
+
   }
 
 
 
-
-
-  cout << -1 << endl;
   return 0;
 }
