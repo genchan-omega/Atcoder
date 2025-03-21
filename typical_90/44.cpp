@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
+#define pd(ans) printf("%.12Lf\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -59,27 +59,31 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  ll n, q;
+  cin >> n >> q;
+  deque<ll> dq;
+  rep(i, n){
+    ll a;
+    cin >> a;
+    dq.emplace_back(a);
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  rep(qi, q){
+    ll type, x, y, buf;
+    cin >> type >> x >> y;
+    x--, y--;
+    switch (type){
+    case 1:
+      swap(dq[x], dq[y]);
+      break;
+    case 2:
+      buf = dq.back();
+      dq.pop_back();
+      dq.emplace_front(buf);
+      break;
+    case 3:
+      cout << dq[x] << endl;
+      break;
+    }
+  }
   return 0;
 }

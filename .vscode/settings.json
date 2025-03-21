@@ -84,6 +84,8 @@
 		"generator": "cpp",
 		"ranges": "cpp",
 		"stacktrace": "cpp",
-		"text_encoding": "cpp"
+		"text_encoding": "cpp",
+		"queue": "cpp",
+		"stack": "cpp"
 	}
 }

@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
+#define pd(ans) printf("%.12Lf\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -58,28 +58,36 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const ll mod = 1000000007LL;
+
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  ll n, l;
+  cin >> n >> l;
+  vector<ll> fact(n+1);
+  fact[0]=fact[1]=1;
+  for(ll i= 1; i<n; i++)
+    fact[i+1]=fact[i]*(i+1)%mod;
+
+  auto power = [&](ll base, ll exp, ll mod)->ll{
+    ll result = 1;
+    while(exp > 0) {
+      if(exp%2==1)
+        result = result*base%mod;
+      base=base*base%mod;
+      exp/=2;
+    }
+    return result;
+  };
+
+  ll ans=0;
+  rep(k, n/l+1){
+    // ans += fact[n-k*l+k]/(fact[k]*fact[n-k*l]);
+    ll inv_k     = power(fact[k], mod-2, mod);
+    ll inv_n_k_l = power(fact[n-k*l], mod-2, mod);
+    ans += fact[n-k*l+k]*inv_k%mod*inv_n_k_l%mod;
+    ans %= mod;
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+
+  cout << ans << endl;
   return 0;
 }

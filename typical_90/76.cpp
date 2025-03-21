@@ -14,8 +14,8 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans)            printf("%.12Lf\n", ans);
+#define inf                100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -26,9 +26,11 @@ struct edge{
 };
 using G = vector<vector<edge>>;
 using P = pair<ll, ll>;
+const ll mod = 1000000007LL;
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
 template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
+template<class T> inline T ceil(T a, T b){return (a+b-1)/b;}
 
 // Debug
 void print_v(auto& vec){
@@ -58,28 +60,42 @@ void print_rle(auto& rle){
 }
 
 // Make Code
-int main(){
+bool solve(){
   ll n;
   cin >> n;
   vector<ll> a(n);
-  rep(i, n)
+  rep(i, n){
     cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+    a[i]*=10;
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  ll sum=0;
+  rep(i, n)
+    sum+=a[i];
+  sum/=10;
+
+  ll now=a[0], l=0;
+  for(ll r=l+1; !(l==r) and l<n; ){
+    while(now<sum){
+      now += a[r];
+      r++;
+      r%=n;
+      cout << "l: " << l << ", r: " << r << endl;
+    }
+    if(now==sum)
+      return true;
+    while(now>sum){
+      now -= a[l];
+      l++;
+      cout << "l: " << l << ", r: " << r << endl;
+    }
+    if(now==sum)
+      return true;
+    cout << "l: " << l << ", r: " << r << endl;
+  }
+  return false;
+}
+
+int main(){
+  yes(solve());
   return 0;
 }

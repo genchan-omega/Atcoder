@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
+#define pd(ans) printf("%.12Lf\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -61,25 +61,41 @@ void print_rle(auto& rle){
 int main(){
   ll n;
   cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  vector<vector<ll>> a(n, vector<ll>(n));
+  rep(i, n)rep(j, n)
+    cin >> a[i][j];
+  ll m;
+  cin >> m;
+  set<P> rumor;
+  rep(i, m){
+    ll x, y;
+    cin >> x >> y;
+    x--, y--;
+    rumor.emplace(x, y);
+    rumor.emplace(y, x);
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  ll ans = inf;
+  vector<ll> runner(n);
+  rep(i, n)
+    runner[i] = i;
+  do{
+    bool flag=true;
+    ll now=0;
+    rep(i, n-1){
+      if(rumor.count({runner[i], runner[i+1]}))
+        flag = false;
+    }
+    if(flag){
+      rep(i, n)
+        now += a[runner[i]][i];
+      chmin(ans, now);
+    }
+      
+  }while (next_permutation(runner.begin(), runner.end()));
+  
+  if(ans==inf)
+    cout << -1 << endl;
+  else
+    cout << ans << endl;
   return 0;
 }

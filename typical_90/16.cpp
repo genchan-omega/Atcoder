@@ -59,27 +59,17 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  ll n, a, b, c;
+  cin >> n >> a >> b >> c;
+  ll ans=inf;
+  rep(i, 10000)rep(j, 10000-i){
+    if(a*i+b*j>n)
+      continue;
+    if((n-(a*i+b*j))%c==0){
+      ll now = i + j + ((n-(a*i+b*j))/c);
+      chmin(ans, now);
+    }
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  cout << ans << endl;
   return 0;
 }

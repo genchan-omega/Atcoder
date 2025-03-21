@@ -14,8 +14,8 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans) printf("%.12Lf\n", ans);
+#define inf 100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -59,27 +59,17 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
+  ll n, q;
+  cin >> n >> q;
   vector<ll> a(n);
   rep(i, n)
     cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
-  }
-  rep(i, q)
-    cout << ans[i] << endl;
+
+  vector<ll> inconv(n-1);
+  rep(i, n-1)
+    inconv[i] = a[i+1] - a[i];
+  
+
+
   return 0;
 }

@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
+#define pd(ans) printf("%.12Lf\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -58,28 +58,40 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const long double PI = 3.14159265358979;
+
+struct pos{
+  long double x, y, z;
+};
+
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
+  long double t, l, x, y, q;
+  cin >> t >> l >> x >> y >> q;
+
+  auto leng = [&](pos a, pos b) -> long double{
+    long double x, y, z;
+    x = abs(a.x-b.x);
+    y = abs(a.y-b.y);
+    z = abs(a.z-b.z);
+    return sqrt(x*x+y*y+z*z);
+  };
+
   rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+    long double e;
+    cin >> e;
+    pos a, b, c;
+    a.x = 0;
+    a.y = -l/2.0*sin(2.0*M_PI*e/t);
+    a.z = l/2.0*(1.0-cos(2.0*PI*e/t));
+    b.x = x;
+    b.y = y;
+    b.z = l/2.0*(1.0-cos(2.0*PI*e/t));
+    c.x = x;
+    c.y = y;
+    c.z = 0.0;
+    long double ans = atan(leng(b, c)/leng(a, b));
+    ans *= 180.0/PI;
+    pd(ans);
   }
-  rep(i, q)
-    cout << ans[i] << endl;
   return 0;
 }

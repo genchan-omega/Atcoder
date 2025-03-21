@@ -14,8 +14,8 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans)            printf("%.12Lf\n", ans);
+#define inf 100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -29,6 +29,7 @@ using P = pair<ll, ll>;
 
 template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
 template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
+template<class T> inline T ceil(T a, T b){return (a+b-1)/b;}
 
 // Debug
 void print_v(auto& vec){
@@ -58,28 +59,39 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const ll mod = 1000000007LL;
+
 int main(){
   ll n;
   cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  vector<P> primes;
+  auto prime_factorize = [&](ll n){
+    vector<P> ret;
+    for(ll i=2; i*i<=n; i++){
+      if(n%i)
+        continue;
+      ll exp=0;
+      while(n%i==0){
+        exp++;
+        n/=i;
+      }
+      // cout << i << " " << exp << endl;
+      ret.emplace_back(i, exp);
+    }
+    if(n!=1)
+    ret.emplace_back(n, 1);
+    return ret;
+  };
+  primes = prime_factorize(n);
+  
+  ll buf=0, ans=0;
+  for(auto[a, exp]:primes)
+    buf += exp;
+  while(1){
+    if(1<<ans >= buf)
+      break;
+    ans++;
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  cout << ans << endl;
   return 0;
 }

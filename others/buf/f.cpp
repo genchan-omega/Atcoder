@@ -9,13 +9,13 @@
 
 #include <bits/stdc++.h>
 #define rep(i, n)          for(ll i = 0; i < (ll)n; ++i)
-#define sort(vec)          sort(vec.begin(), vec.end());
-#define reverse(vec)       reverse(vec.begin(), vec.end());
+// #define sort(vec)          sort(vec.begin(), vec.end());
+// #define reverse(vec)       reverse(vec.begin(), vec.end());
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans) printf("%.12Lf\n", ans);
+#define inf 100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -60,26 +60,32 @@ void print_rle(auto& rle){
 // Make Code
 int main(){
   ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
+  cin >>n;
+  deque<P> dq;
+  ll cnt=0;
+  rep(i, n){
+    ll a, b;
+    cin >> a >> b;
+    if(b==0){
+      dq.emplace_front(a, b);
+      cnt++;
+    }
     else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+      dq.emplace_back(a, b);
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  sort(dq.begin()+cnt, dq.end());
+  reverse(dq.begin()+cnt, dq.end());
+  ll power=0, score=0;
+  rep(i, n){
+    auto [a, b] = dq.front();
+    dq.pop_front();
+    power += a;
+    if(b!=0)
+      score += b+power;
+  }
+  cout << score << endl;
+
+
+
   return 0;
 }

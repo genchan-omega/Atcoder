@@ -62,24 +62,16 @@ int main(){
   ll n;
   cin >> n;
   vector<ll> a(n);
+  vector<ll> b(n);
   rep(i, n)
     cin >> a[i];
+  rep(i, n)
+    cin >> b[i];
   sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
-  }
-  rep(i, q)
-    cout << ans[i] << endl;
+  sort(b);
+  ll ans=0;
+  rep(i, n)
+    ans += abs(a[i]-b[i]);
+  cout << ans << endl;
   return 0;
 }

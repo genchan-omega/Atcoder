@@ -14,8 +14,8 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans)            printf("%.12Lf\n", ans);
+#define inf                100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -26,9 +26,25 @@ struct edge{
 };
 using G = vector<vector<edge>>;
 using P = pair<ll, ll>;
+const ll mod = 1000000007LL;
 
-template<class T> inline bool chmax(T& a, T b){if(a < b) {a = b; return 1;} return 0;}
-template<class T> inline bool chmin(T& a, T b){if(a > b) {a = b; return 1;} return 0;}
+template<class T, class U>
+inline bool chmax(T& a, U b) {
+    if (a < b) {
+        a = static_cast<T>(b);
+        return true;
+    }
+    return false;
+}
+template<class T, class U>
+inline bool chmin(T& a, U b) {
+    if (a > b) {
+        a = static_cast<T>(b);
+        return true;
+    }
+    return false;
+}
+template<class T> inline T ceil(T a, T b){return (a+b-1)/b;}
 
 // Debug
 void print_v(auto& vec){
@@ -59,27 +75,24 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  ll n, m;
+  cin >> n >> m;
+  vector<ll> r2l(m+1, inf);
+  rep(i, n){
+    ll l, r;
+    cin >> l >> r;
+    l--, r;
+    chmin(r2l[r], l);
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  rep(i, m)
+    if(r2l[i]==inf)
+      r2l[i] = -1;
+  ll ans=0;
+  for(ll l=0, r=0; l<m; l++){
+    while(r<m+1 and l > r2l[r+1])
+      r++;
+    ans += r-l;
+  }
+  cout << ans << endl;
   return 0;
 }

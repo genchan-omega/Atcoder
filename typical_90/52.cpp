@@ -14,7 +14,7 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
+#define pd(ans) printf("%.12Lf\n", ans);
 #define inf 1e18
 
 using namespace std;
@@ -58,28 +58,24 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const ll mod = 1000000007LL;
+
 int main(){
   ll n;
   cin >> n;
   vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  rep(i, n){
+    rep(j, 6){
+      ll x;
+      cin >> x;
+      a[i] += x;
+    }
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  ll ans=1;
+  rep(i, n){
+    ans *= a[i];
+    ans %= mod;
+  }
+  cout << ans << endl;
   return 0;
 }

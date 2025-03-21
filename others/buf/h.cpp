@@ -14,8 +14,8 @@
 #define make_v( vec, m)    vector<ll> vec(m);
 #define make_vv(vec, m, n) vector<vector<ll>> vec(m, vector<ll>(n));
 #define yes(flag)          cout << (flag ? "Yes" : "No") << endl;
-#define pd(ans) printf("%.8f\n", ans);
-#define inf 1e18
+#define pd(ans) printf("%.12Lf\n", ans);
+#define inf 100100100100100100LL
 
 using namespace std;
 using ll = int64_t;
@@ -58,28 +58,43 @@ void print_rle(auto& rle){
 }
 
 // Make Code
+const ll dx[] = {0, -1, 0, 1};
+const ll dy[] = {-1, 0, 1, 0};
+
 int main(){
-  ll n;
-  cin >> n;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-  sort(a);
-  ll q;
-  cin >>q;
-  vector<ll> ans(q, 0);
-  rep(qi, q){
-    ll b, now=inf;
-    cin >> b;
-    auto it = lower_bound(a.begin(), a.end(), b) - a.begin();
-    if(it==0)
-      ans[qi] = abs(a[it]-b);
-    else if(it==a.size())
-      ans[qi] = abs(a[it-1]-b);
-    else
-      ans[qi] = min(abs(a[it-1]-b), abs(a[it])-b);
+  ll h, w;
+  cin >> h >> w;
+  P s, g;
+  cin >> s.first >> s.second >> g.first >> g.second;
+  s.first--, s.second--, g.first--, g.second--;
+  vector<vector<ll>> maze(h, vector<ll>(w));
+  rep(i, h)rep(j, w)
+    cin >> maze[i][j];
+
+  vector<vector<ll>> dist(h, vector<ll>(w, inf));
+  queue<P> q;
+  dist[s.first][s.second]=0;
+  q.emplace(s.first, s.second);
+
+  while(!q.empty()){
+    auto [ni, nj] = q.front();
+    q.pop();
+    rep(i, 4){
+      ll nni = ni+dx[i];
+      ll nnj = nj+dy[i];
+      if(nni<0 or nni>=h or nnj<0 or nnj>=w)
+        continue;
+      if(dist[nni][nnj]!=inf)
+        continue;
+      if(maze[ni][nj]-maze[nni][nnj]==0 or maze[ni][nj]-maze[nni][nnj]==1){
+        dist[nni][nnj] = dist[ni][nj]+1;
+        q.emplace(nni, nnj);
+      }
+    }
   }
-  rep(i, q)
-    cout << ans[i] << endl;
+  if(dist[g.first][g.second]!=inf)
+    cout << dist[g.first][g.second] << endl;
+  else
+    cout << -1 << endl;
   return 0;
 }
