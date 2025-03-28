@@ -75,24 +75,25 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-
-  ll ans=0;
-  map<ll, ll> amap;
-  for(ll l=0, r=0; l<n; l++){
-    while(r<n and amap.size() + (amap.count(a[r])? 0 : 1)<k+1){
-      amap[a[r]]++;
-      r++;
-    }
-    chmax(ans, r-l);
-    amap[a[l]]--;
-    if(amap[a[l]]==0)
-      amap.erase(a[l]);
+  ll n, m;
+  cin >> n >> m;
+  vector<ll> r2l(m+1, -1);
+  rep(i, n){
+    ll l, r;
+    cin >> l >> r;
+    l--, r;
+    chmax(r2l[r], l);
   }
+  ll ans=0;
+  for(ll l=0, r=0; r<m+1; r++){
+    //lを一個進めても大丈夫か
+    while(l<m and l<r2l[r])
+      l++;
+    //　この時点のr)を含む要素を全て数え上げ
+    ans += r-l;
+    cout << "l: " << l << ", r: " << r << endl;
+  }
+  print_v(r2l);
   cout << ans << endl;
   return 0;
 }

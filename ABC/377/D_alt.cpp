@@ -77,21 +77,22 @@ void print_rle(auto& rle){
 int main(){
   ll n, m;
   cin >> n >> m;
-  vector<ll> r2l(m+1, inf);
+  vector<ll> r2l(m+1, -1);
   rep(i, n){
     ll l, r;
     cin >> l >> r;
     l--, r;
-    chmin(r2l[r], l);
+    chmax(r2l[r], l);
   }
-  rep(i, m)
-    if(r2l[i]==inf)
-      r2l[i] = -1;
   ll ans=0;
   for(ll l=0, r=0; l<m; l++){
-    while(r<m+1 and l > r2l[r+1])
+    // lがrを追い越すことを考慮
+    chmax(r, l);
+    while(r<m and l>r2l[r+1])
       r++;
+    //　この時点の[lを含む要素を全て数え上げ
     ans += r-l;
+    cout << "l: " << l << ", r: " << r << endl;
   }
   cout << ans << endl;
   return 0;

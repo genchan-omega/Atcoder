@@ -75,24 +75,20 @@ void print_rle(auto& rle){
 
 // Make Code
 int main(){
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> a(n);
-  rep(i, n)
-    cin >> a[i];
-
-  ll ans=0;
-  map<ll, ll> amap;
-  for(ll l=0, r=0; l<n; l++){
-    while(r<n and amap.size() + (amap.count(a[r])? 0 : 1)<k+1){
-      amap[a[r]]++;
-      r++;
-    }
-    chmax(ans, r-l);
-    amap[a[l]]--;
-    if(amap[a[l]]==0)
-      amap.erase(a[l]);
+  ll n;
+  cin >> n;
+  string s(n, ' ');
+  if(n%2){
+    rep(i, n/2)
+      s[i] = s[n-i-1] = '-';
+    s[n/2] = '=';
   }
-  cout << ans << endl;
+  else{
+    rep(i, n/2)
+      s[i] = s[n-i] = '-';
+    s[n/2-1] = '=';
+    s[n/2] = '=';
+  }
+  cout << s << endl;
   return 0;
 }
